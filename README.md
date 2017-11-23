@@ -98,7 +98,8 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        'IGNORE': ['.+\.hot-update.js', '.+\.map'],
+        'SILENT': False
     }
 }
 ```
@@ -174,6 +175,11 @@ and your webpack config is located at `/home/src/webpack.config.js`, then the va
 
 <br>
 
+#### SILENT
+
+`SILENT` prevents Django from raising an exception in the event of a WebpackError, allowing Webpack to handle and display errors itself.
+
+<br>
 
 ## Usage
 <br>

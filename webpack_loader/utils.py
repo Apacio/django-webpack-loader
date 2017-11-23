@@ -14,9 +14,10 @@ def get_loader(config_name):
 
 def _filter_by_extension(bundle, extension):
     '''Return only files with the given extension'''
-    for chunk in bundle:
-        if chunk['name'].endswith('.{0}'.format(extension)):
-            yield chunk
+    if bundle:
+        for chunk in bundle:
+            if chunk['name'].endswith('.{0}'.format(extension)):
+                yield chunk
 
 
 def _get_bundle(bundle_name, extension, config):
@@ -44,16 +45,17 @@ def get_as_tags(bundle_name, extension=None, config='DEFAULT', attrs=''):
 
     bundle = _get_bundle(bundle_name, extension, config)
     tags = []
-    for chunk in bundle:
-        if chunk['name'].endswith(('.js', '.js.gz')):
-            tags.append((
-                '<script type="text/javascript" src="{0}" {1}></script>'
-            ).format(chunk['url'], attrs))
-        elif chunk['name'].endswith(('.css', '.css.gz')):
-            tags.append((
-                '<link type="text/css" href="{0}" rel="stylesheet" {1}/>'
-            ).format(chunk['url'], attrs))
-    return tags
+    if bundle:
+        for chunk in bundle:
+            if chunk['name'].endswith(('.js', '.js.gz')):
+                tags.append((
+                    '<script type="text/javascript" src="{0}" {1}></script>'
+                ).format(chunk['url'], attrs))
+            elif chunk['name'].endswith(('.css', '.css.gz')):
+                tags.append((
+                    '<link type="text/css" href="{0}" rel="stylesheet" {1}/>'
+                ).format(chunk['url'], attrs))
+        return tags
 
 
 def get_static(asset_name, config='DEFAULT'):

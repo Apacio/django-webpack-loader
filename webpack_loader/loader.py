@@ -94,9 +94,11 @@ class WebpackLoader(object):
             {error} in {file}
             {message}
             """.format(**assets)
-            raise WebpackError(error)
+            if not self.config['SILENT']:
+                raise WebpackError(error)
 
-        raise WebpackLoaderBadStatsError(
-            "The stats file does not contain valid data. Make sure "
-            "webpack-bundle-tracker plugin is enabled and try to run "
-            "webpack again.")
+        if not self.config['SILENT']:
+            raise WebpackLoaderBadStatsError(
+                "The stats file does not contain valid data. Make sure "
+                "webpack-bundle-tracker plugin is enabled and try to run "
+                "webpack again.")
